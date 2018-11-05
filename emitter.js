@@ -69,7 +69,7 @@ function getEmitter() {
          */
         off: function (event, context) {
             eventsInfo.forEach((eventInfo, eventName) => {
-                if (event === eventName || eventName.startsWith(event)) {
+                if (event === eventName || event.startsWith(eventName)) {
                     eventsInfo.get(eventName).delete(context);
                 }
             });
