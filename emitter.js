@@ -9,21 +9,21 @@ const isStar = true;
 function handleEvent(contextsInfo) {
     contextsInfo.forEach((handlersInfo, context) => {
         handlersInfo.forEach(handlerInfo => {
-            wasSuccessApply(context, handlerInfo);
+            wasSuccessCall(context, handlerInfo);
         });
     });
 }
 
-function wasSuccessApply(context, handlerInfo) {
-    const { handler, times, frequency, tryToApplyCount } = handlerInfo;
-    const shouldCall = (times === 0 || tryToApplyCount < times) &&
-        (frequency === 0 || tryToApplyCount % frequency === 0);
+function wasSuccessCall(context, handlerInfo) {
+    const { handler, times, frequency, tryToCallCount } = handlerInfo;
+    const shouldCall = (times === 0 || tryToCallCount < times) &&
+        (frequency === 0 || tryToCallCount % frequency === 0);
 
     if (shouldCall) {
-        handler.apply(context);
+        handler.call(context);
     }
 
-    handlerInfo.tryToApplyCount += 1;
+    handlerInfo.tryToCallCount += 1;
 
     return shouldCall;
 }
@@ -56,7 +56,7 @@ function getEmitter() {
                 handler,
                 times: additionalInfo.times,
                 frequency: additionalInfo.frequency,
-                tryToApplyCount: 0 });
+                tryToCallCount: 0 });
 
             return this;
         },
